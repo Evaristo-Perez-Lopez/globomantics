@@ -1,7 +1,12 @@
 import HouseRow from "./houseRow";
 import useHouses from "../hooks/useHouses";
+import LoadingIndicator from "./loadingIndicator";
+import loadingStatus from "../helpers/loadingStatus";
 function HouseList({ selectHouse }) {
-  const { houses, setHouses } = useHouses();
+  const { houses, setHouses, loadingState } = useHouses();
+
+  if (loadingState !== loadingStatus.loaded) <LoadingIndicator />;
+
   const addHouse = () => {
     setHouses([
       ...houses,
@@ -13,6 +18,7 @@ function HouseList({ selectHouse }) {
       },
     ]);
   };
+
   return (
     <>
       {/* create a table with three rows with bootstrap5 */}

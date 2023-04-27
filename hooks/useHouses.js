@@ -1,19 +1,18 @@
-const { useState, useEffect } = require("react");
+import { useEffect, useState } from "react";
+import useGetRequest from "./useGetRequest";
 
 const useHouses = () => {
   const [houses, setHouses] = useState([]);
-  useEffect(
-    () => {
-      const getAllHouses = async () => {
-        const response = await fetch("/api/houses");
-        const houses = await response.json();
-        setHouses(houses);
-      };
-      getAllHouses();
-    },
-    [] /** para evitar infinite-loop */
-  );
-  return { houses, setHouses };
+  const { get, loadingState } = useGetRequest("/api/houses");
+
+  useEffect(() => {
+    const getHouses = async () => {
+      const houses = await get();
+      setHouses(houses);
+    };
+    getHouses();
+  }, [get]);
+  return { houses, setHouses, loadingState };
 };
 
 export default useHouses;
