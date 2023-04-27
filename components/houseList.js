@@ -1,6 +1,7 @@
+import { useState } from "react";
 import HouseRow from "./houseRow";
 
-const houses = [
+const houseArray = [
   {
     address: "1234 Main St",
     price: 100000,
@@ -15,6 +16,18 @@ const houses = [
   },
 ];
 function HouseList() {
+  const [houses, setHouses] = useState(houseArray);
+  const addHouse = () => {
+    setHouses([
+      ...houses,
+      {
+        id: 3,
+        address: "Colorado Springs",
+        price: 15000,
+        country: "USA",
+      },
+    ]);
+  };
   return (
     <>
       {/* create a table with three rows with bootstrap5 */}
@@ -37,6 +50,9 @@ function HouseList() {
           ))}
         </tbody>
       </table>
+      <button onClick={addHouse} className="btn btn-primary">
+        Add
+      </button>
     </>
   );
 }
